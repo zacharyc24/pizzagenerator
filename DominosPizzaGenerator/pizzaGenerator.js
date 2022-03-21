@@ -1,7 +1,7 @@
 /**
 ===============================================================================
 Domino's Pizza Randomizer
-GitHub Profile: l-shahid
+
 03-20-2022
 
 This is a simple JavaScript for generating a random Domino's Pizza for
@@ -18,15 +18,18 @@ Small: Hand tossed, gluten free
 
 Changelog----------------------------------------------------------------------
 03-20-2022: Pizza variables instantiated, generation functions instantiated.
+fiveDollarPizza function works.
 
 ===============================================================================
 */
+
+// Instantiate Pizza Constants-------------------------------------------------
 
 const pizzaSizes = ['small', 'medium', 'large', 'extra large'];
 const cheeseSauceLevel = ['light', 'normal', 'extra'];
 const pizzaCut = ['pie cut', 'square cut', 'uncut'];
 const pizzaBake = ['well done', 'normal bake'];
-const seasoning = ['garlic seasoned crust', 'no garlic seasoned crust'];
+const seasoning = ['a garlic seasoned crust', 'no garlic seasoned crust'];
 
 const smallCrusts = ['gluten-free', 'hand tossed'];
 const mediumCrusts = ['hand tossed', 'hand made pan', 'crunchy thin crust'];
@@ -52,14 +55,20 @@ const pizzaToppings = ['italian sausage', 'pepperoni', 'ham', 'beef',
   'banana peppers', 'diced tomatoes', 'feta cheese', 'mushrooms',
   'shredded parmesean asiago', 'pineapple'];
 
-let numToppings;
-let fiveDollarPizza = true;
-let toppingList = [];
+//-----------------------------------------------------------------------------
+
+//User set variables ----------------------------------------------------------
+
+let numToppings = 4;
+let fiveDollarPizza = false;
+
+//-----------------------------------------------------------------------------
+
+//Pizza Check Statements -------------------------------------------------------------
 
 if (fiveDollarPizza === true) {
   numToppings = 2;
   console.log('The Dominos Pizza Oracle TM will now predict a two topping medium pizza for you.');
-  randomToppings();
   generateFiveDollarPizza();
 } else {
   console.log('The Dominos Pizza Oracle TM will now predict a pizza you will enjoy.');
@@ -68,12 +77,20 @@ if (fiveDollarPizza === true) {
 
 function toppingCheck() {
   if (numToppings > 10) {
-    console.log('Please enter a topping number that is less than or equal to 10');
+    console.log('The number of toppings you desire is clouding my vision.');
+    console.log('Please enter a topping number that is between 1 and 10.');
+  } else if (numToppings < 0) {
+    console.log('I am unable to generate negative toppings.');
+    console.log('Please enter a topping number between 1 and 10.');
   } else {
-    randomToppings();
+    numToppings = Math.floor(Math.random() * 10);
     generatePizza();
   }
 }
+
+//-----------------------------------------------------------------------------
+
+//Topping Function ------------------------------------------------------------
 
 function randomToppings(numToppings) {
   let toppingIndices = [];
@@ -82,38 +99,65 @@ function randomToppings(numToppings) {
     toppingIndices.push(toppingIndex);
   }
 
-  console.log('Topping Indices: ' + toppingIndices);
+  generatePizza();
 }
 
-function generateFiveDollarPizza(numToppings) {
+//-----------------------------------------------------------------------------
 
-  let bake = pizzaBake[Math.floor(Math.random(pizzaBake.length) * (pizzaBake.length))];
-  let cut = pizzaCut[Math.floor(Math.random(pizzaCut.length) * (pizzaCut.length))];
-  let crust = mediumCrusts[Math.floor(Math.random() * pizzaCut.length)];
+//Pizza generation functions --------------------------------------------------
+
+function generateFiveDollarPizza(numToppings) {
+  let bake = pizzaBake[Math.floor(Math.random() * (pizzaBake.length))];
+  let cut = pizzaCut[Math.floor(Math.random() * (pizzaCut.length))];
+  let crust = mediumCrusts[Math.floor(Math.random() * mediumCrusts.length)];
   let sauce = pizzaSauces[Math.floor(Math.random() * pizzaSauces.length)];
   let toppingA = pizzaToppings[Math.floor(Math.random() * pizzaToppings.length)];
   let toppingB = pizzaToppings[Math.floor(Math.random() * pizzaToppings.length)];
+  let seasoningBool = seasoning[Math.floor(Math.random() * seasoning.length)];
 
-  console.log('The Dominos Pizza Oracle TM predicts you will enjoy a:');
+  console.log('The Dominos Pizza Oracle TM predicts you will enjoy a: ');
   console.log(`medium, ${bake} ${cut} ${crust} pizza`);
-  console.log(`with ${sauce}, ${toppingA} and ${toppingB}.`);
-};
+  console.log(`with ${sauce}, ${toppingA}, ${toppingB}, and ${seasoningBool}.`);
+}
 
 function generatePizza(numToppings) {
+  let size = pizzaSizes[Math.floor(Math.random() * pizzaSizes.length)];
+  let crust;
 
-  if (numToppings > 10) {
+  switch (size){
+    case 'small':
+      crust = smallCrusts[Math.floor(Math.random() * smallCrusts.length)];
+    break;
 
-  } else {
+    case 'medium':
+      crust = mediumCrusts[Math.floor(Math.random() * mediumCrusts.length)];
+    break;
 
-    let toppingCount = 0;
-    while (toppingCount < numToppings) {
-      let toppingIndex = Math.random(pizzaToppings.length) * 10;
-      toppingList.push(pizzaToppings[toppingIndex]);
-      toppingCount += 1;
-    }
+    case 'large':
+      crust = largeCrusts[Math.floor(Math.random() * largeCrusts.length)];
+    break;
+
+    case 'xlarge':
+      crust = xLargeCrust[Math.floor(Math.random() * xLargeCrust.length)];
+    break;
   }
 
+  let bake = pizzaBake[Math.floor(Math.random() * pizzaBake.length)];
+  let cut = pizzaCut[Math.floor(Math.random() * pizzaCut.length)];
+  let sauce = pizzaSauces[Math.floor(Math.random() * pizzaSauces.length)];
+  let seasoningBool = seasoning[Math.floor(Math.random() * seasoning.length)];
+
+  let toppings = [];
+  let toppingCount = 0;
+
+  while (toppingCount < numToppings) {
+    let toppingIndex = Math.floor(Math.random() * pizzaToppings.length);
+    toppings.push(pizzaToppings[toppingIndex]);
+    toppingCount += 1;
+  }
+
+  console.log(numToppings);
   console.log('The Dominos Pizza Oracle TM predicts you will enjoy a:');
   console.log(`${size}, ${bake} ${cut} ${crust} pizza`);
-  console.log(`with ${sauce}, ${toppingA} and ${toppingB}.`);
+  console.log(`with ${sauce}.`);
 }
