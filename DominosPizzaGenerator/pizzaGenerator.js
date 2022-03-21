@@ -18,7 +18,7 @@ Small: Hand tossed, gluten free
 
 Changelog----------------------------------------------------------------------
 03-20-2022: Pizza variables instantiated, generation functions instantiated.
-fiveDollarPizza function works.
+fiveDollarPizza & generatePizza functions work.
 
 ===============================================================================
 */
