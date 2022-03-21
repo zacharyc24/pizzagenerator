@@ -81,28 +81,24 @@ function randomToppings(numToppings) {
     let toppingIndex = Math.random(pizzaToppings.length) * 10;
     toppingIndices.push(toppingIndex);
   }
+
+  console.log('Topping Indices: ' + toppingIndices);
 }
 
 function generateFiveDollarPizza(numToppings) {
 
-  let toppingCount = 0;
-  let crust;
-  let bake;
-  let cut;
-  let sauce;
+  let crust = mediumCrusts[Math.floor(Math.random(mediumCrusts.length) * 10)];
+  let bake = pizzaBake [Math.floor(Math.random(pizzaBake.length) * 10)];
+  let cut = pizzaCut[Math.floor(Math.random(pizzaCut.length) * 10)];
+  let sauce = pizzaSauces[Math.floor(Math.random(pizzaSauces.length) * 10)];
+  let toppingA = pizzaToppings[Math.floor(Math.random(pizzaToppings.length) * 10)];
+  let toppingB = pizzaToppings[Math.floor(Math.random(pizzaToppings.length) * 10)];
 
-  while (numToppings > toppingCount) {
-    toppingA = pizzaToppings[toppingIndex];
-    toppingCount += 1;
-    toppingB = pizzaToppings[toppingIndex];
-    toppingCount += 1;
-  }
+  console.log('Test Random:' + Math.floor(Math.random(pizzaToppings.length) * 10));
 
-  console.log(toppingA);
-  console.log(toppingB);
   console.log('The Dominos Pizza Oracle TM predicts you will enjoy a:');
   console.log(`medium, ${bake} ${cut} ${crust} pizza`);
-  console.log(`with ${sauce}, ${toppingList[0]} and ${toppingList[1]}.`);
+  console.log(`with ${sauce}, ${toppingA} and ${toppingB}.`);
 };
 
 function generatePizza(numToppings) {
