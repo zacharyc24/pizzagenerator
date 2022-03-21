@@ -59,15 +59,14 @@ const pizzaToppings = ['italian sausage', 'pepperoni', 'ham', 'beef',
 
 //User set variables ----------------------------------------------------------
 
-let numToppings = 4;
-let fiveDollarPizza = false;
+let numToppings = 0;
+let fiveDollarPizza = true;
 
 //-----------------------------------------------------------------------------
 
 //Pizza Check Statements -------------------------------------------------------------
 
 if (fiveDollarPizza === true) {
-  numToppings = 2;
   console.log('The Dominos Pizza Oracle TM will now predict a two topping medium pizza for you.');
   generateFiveDollarPizza();
 } else {
@@ -82,24 +81,12 @@ function toppingCheck() {
   } else if (numToppings < 0) {
     console.log('I am unable to generate negative toppings.');
     console.log('Please enter a topping number between 1 and 10.');
-  } else {
+  } else if (numToppings === 0) {
     numToppings = Math.floor(Math.random() * 10);
-    generatePizza();
+    generatePizza(numToppings);
+  } else {
+    generatePizza(numToppings);
   }
-}
-
-//-----------------------------------------------------------------------------
-
-//Topping Function ------------------------------------------------------------
-
-function randomToppings(numToppings) {
-  let toppingIndices = [];
-  while (toppingIndices.length < numToppings) {
-    let toppingIndex = Math.random() * numToppings;
-    toppingIndices.push(toppingIndex);
-  }
-
-  generatePizza();
 }
 
 //-----------------------------------------------------------------------------
@@ -122,7 +109,15 @@ function generateFiveDollarPizza(numToppings) {
 
 function generatePizza(numToppings) {
   let size = pizzaSizes[Math.floor(Math.random() * pizzaSizes.length)];
+  let bake = pizzaBake[Math.floor(Math.random() * pizzaBake.length)];
+  let cut = pizzaCut[Math.floor(Math.random() * pizzaCut.length)];
+  let sauce = pizzaSauces[Math.floor(Math.random() * pizzaSauces.length)];
+  let seasoningBool = seasoning[Math.floor(Math.random() * seasoning.length)];
+
   let crust;
+
+  let toppings = [];
+  let toppingCount = 0;
 
   switch (size){
     case 'small':
@@ -142,14 +137,6 @@ function generatePizza(numToppings) {
     break;
   }
 
-  let bake = pizzaBake[Math.floor(Math.random() * pizzaBake.length)];
-  let cut = pizzaCut[Math.floor(Math.random() * pizzaCut.length)];
-  let sauce = pizzaSauces[Math.floor(Math.random() * pizzaSauces.length)];
-  let seasoningBool = seasoning[Math.floor(Math.random() * seasoning.length)];
-
-  let toppings = [];
-  let toppingCount = 0;
-  numToppings = 4;
   while (toppingCount < numToppings) {
     let toppingIndex = Math.floor(Math.random() * pizzaToppings.length);
     toppings.push(' ' + pizzaToppings[toppingIndex]);
