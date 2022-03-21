@@ -20,6 +20,8 @@ Changelog----------------------------------------------------------------------
 03-20-2022: Pizza variables instantiated, generation functions instantiated.
 fiveDollarPizza & generatePizza functions work.
 
+3-21-2022: Wrote helper functions for readability & included while loops for unique toppings. By Zach.
+
 ===============================================================================
 */
 
@@ -93,14 +95,26 @@ function toppingCheck() {
 
 //Pizza generation functions --------------------------------------------------
 
+function randomElement(arr){
+  return arr[Math.floor(Math.random() * arr.length)]
+}
+
+function generatePizzaBase(){
+  let bake = randomElement(pizzaBake);
+  let cut = randomElement(pizzaCut);
+  let sauce = randomElement(pizzaSauces);
+  let seasoningBool = randomElement(seasoning);
+}
+
 function generateFiveDollarPizza(numToppings) {
-  let bake = pizzaBake[Math.floor(Math.random() * (pizzaBake.length))];
-  let cut = pizzaCut[Math.floor(Math.random() * (pizzaCut.length))];
-  let crust = mediumCrusts[Math.floor(Math.random() * mediumCrusts.length)];
-  let sauce = pizzaSauces[Math.floor(Math.random() * pizzaSauces.length)];
-  let toppingA = pizzaToppings[Math.floor(Math.random() * pizzaToppings.length)];
-  let toppingB = pizzaToppings[Math.floor(Math.random() * pizzaToppings.length)];
-  let seasoningBool = seasoning[Math.floor(Math.random() * seasoning.length)];
+  generatePizzaBase();
+  let crust = randomElement(mediumCrusts);
+  let toppingA = randomElement(pizzaToppings);
+  let toppingB = randomElement(pizzaToppings);
+  while(toppingA == toppingB){
+    toppingB = randomElement(pizzaToppings);
+    //keeps randomizing until unique topping found
+  }
 
   console.log('The Dominos Pizza Oracle TM predicts you will enjoy a: ');
   console.log(`medium, ${bake} ${cut} ${crust} pizza`);
@@ -109,39 +123,44 @@ function generateFiveDollarPizza(numToppings) {
 
 function generatePizza(numToppings) {
   let size = pizzaSizes[Math.floor(Math.random() * pizzaSizes.length)];
-  let bake = pizzaBake[Math.floor(Math.random() * pizzaBake.length)];
-  let cut = pizzaCut[Math.floor(Math.random() * pizzaCut.length)];
-  let sauce = pizzaSauces[Math.floor(Math.random() * pizzaSauces.length)];
-  let seasoningBool = seasoning[Math.floor(Math.random() * seasoning.length)];
+  generatePizzaBase();
 
   let crust;
 
   let toppings = [];
-  let toppingCount = 0;
 
   switch (size){
     case 'small':
-      crust = smallCrusts[Math.floor(Math.random() * smallCrusts.length)];
+      crust = randomElement(smallCrusts);
     break;
 
     case 'medium':
-      crust = mediumCrusts[Math.floor(Math.random() * mediumCrusts.length)];
+      crust = randomElement(mediumCrusts);
     break;
 
     case 'large':
-      crust = largeCrusts[Math.floor(Math.random() * largeCrusts.length)];
+      crust = randomElement(largeCrusts);
     break;
 
     case 'xlarge':
-      crust = xLargeCrust[Math.floor(Math.random() * xLargeCrust.length)];
+      crust = randomElement(xLargeCrust);
     break;
   }
 
-  while (toppingCount < numToppings) {
+  for(var i = 0; i <= numToppings; i++){
+    var t = randomElement(pizzaToppings);
+    while(toppings.includes(t)){
+      t = randomElement(pizzaToppings);
+    }
+    if(!toppings.includes(t)){
+      toppings.push(t);
+    }
+  }
+  /*while (toppingCount < numToppings) {
     let toppingIndex = Math.floor(Math.random() * pizzaToppings.length);
     toppings.push(' ' + pizzaToppings[toppingIndex]);
-    toppingCount += 1;
-  }
+    toppingCount++;
+  } */
 
   console.log('The Dominos Pizza Oracle TM predicts you will enjoy a:');
   console.log(`${size}, ${bake} ${cut} ${crust} pizza`);
