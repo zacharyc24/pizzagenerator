@@ -149,15 +149,14 @@ function generatePizza(numToppings) {
 
   let toppings = [];
   let toppingCount = 0;
-
+  numToppings = 4;
   while (toppingCount < numToppings) {
     let toppingIndex = Math.floor(Math.random() * pizzaToppings.length);
-    toppings.push(pizzaToppings[toppingIndex]);
+    toppings.push(' ' + pizzaToppings[toppingIndex]);
     toppingCount += 1;
   }
 
-  console.log(numToppings);
   console.log('The Dominos Pizza Oracle TM predicts you will enjoy a:');
   console.log(`${size}, ${bake} ${cut} ${crust} pizza`);
-  console.log(`with ${sauce}.`);
+  console.log(`with ${sauce},${toppings} and ${seasoningBool}.`);
 }
