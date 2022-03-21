@@ -78,7 +78,7 @@ function toppingCheck() {
 function randomToppings(numToppings) {
   let toppingIndices = [];
   while (toppingIndices.length < numToppings) {
-    let toppingIndex = Math.random(pizzaToppings.length) * 10;
+    let toppingIndex = Math.random() * numToppings;
     toppingIndices.push(toppingIndex);
   }
 
@@ -87,14 +87,12 @@ function randomToppings(numToppings) {
 
 function generateFiveDollarPizza(numToppings) {
 
-  let crust = mediumCrusts[Math.floor(Math.random(mediumCrusts.length) * 10)];
-  let bake = pizzaBake [Math.floor(Math.random(pizzaBake.length) * 10)];
-  let cut = pizzaCut[Math.floor(Math.random(pizzaCut.length) * 10)];
-  let sauce = pizzaSauces[Math.floor(Math.random(pizzaSauces.length) * 10)];
-  let toppingA = pizzaToppings[Math.floor(Math.random(pizzaToppings.length) * 10)];
-  let toppingB = pizzaToppings[Math.floor(Math.random(pizzaToppings.length) * 10)];
-
-  console.log('Test Random:' + Math.floor(Math.random(pizzaToppings.length) * 10));
+  let bake = pizzaBake[Math.floor(Math.random(pizzaBake.length) * (pizzaBake.length))];
+  let cut = pizzaCut[Math.floor(Math.random(pizzaCut.length) * (pizzaCut.length))];
+  let crust = mediumCrusts[Math.floor(Math.random() * pizzaCut.length)];
+  let sauce = pizzaSauces[Math.floor(Math.random() * pizzaSauces.length)];
+  let toppingA = pizzaToppings[Math.floor(Math.random() * pizzaToppings.length)];
+  let toppingB = pizzaToppings[Math.floor(Math.random() * pizzaToppings.length)];
 
   console.log('The Dominos Pizza Oracle TM predicts you will enjoy a:');
   console.log(`medium, ${bake} ${cut} ${crust} pizza`);
@@ -102,8 +100,11 @@ function generateFiveDollarPizza(numToppings) {
 };
 
 function generatePizza(numToppings) {
+
   if (numToppings > 10) {
+
   } else {
+
     let toppingCount = 0;
     while (toppingCount < numToppings) {
       let toppingIndex = Math.random(pizzaToppings.length) * 10;
@@ -111,4 +112,8 @@ function generatePizza(numToppings) {
       toppingCount += 1;
     }
   }
+
+  console.log('The Dominos Pizza Oracle TM predicts you will enjoy a:');
+  console.log(`${size}, ${bake} ${cut} ${crust} pizza`);
+  console.log(`with ${sauce}, ${toppingA} and ${toppingB}.`);
 }
