@@ -1,37 +1,43 @@
 /**
 ===============================================================================
 Domino's Pizza Randomizer
-
 03-20-2022
-
 This is a simple JavaScript for generating a random Domino's Pizza for
 when you don't know what to order.
-
 Notes--------------------------------------------------------------------------
 From dominos.com
-
 Topping limit is 10
 X-Large crusts: Brooklyn crust
 Large Crusts: Brooklyn, hand tossed, thin crust
 Medium Crusts: Hand tossed, handmade pan, thin crust
 Small: Hand tossed, gluten free
-
 Changelog----------------------------------------------------------------------
 03-20-2022: Pizza variables instantiated, generation functions instantiated.
 fiveDollarPizza & generatePizza functions work.
-
 3-21-2022: Wrote helper functions for readability & included while loops for unique toppings. By Zach.
-
 ===============================================================================
 */
 
+
+
 // Instantiate Pizza Constants-------------------------------------------------
+var prediction = document.getElementById('pizzaPrediction');
+prediction.innerText = " ";
+
+var size;
+var sauceLevel;
+var cut;
+var bake;
+var seasoning;
+var crust;
+var sauceType;
+var toppings;
 
 const pizzaSizes = ['small', 'medium', 'large', 'extra large'];
 const cheeseSauceLevel = ['light', 'normal', 'extra'];
 const pizzaCut = ['pie cut', 'square cut', 'uncut'];
 const pizzaBake = ['well done', 'normal bake'];
-const seasoning = ['a garlic seasoned crust', 'no garlic seasoned crust'];
+const seasoningOptions = ['a garlic seasoned crust', 'no garlic seasoned crust'];
 
 const smallCrusts = ['gluten-free', 'hand tossed'];
 const mediumCrusts = ['hand tossed', 'hand made pan', 'crunchy thin crust'];
@@ -68,14 +74,6 @@ let fiveDollarPizza = true;
 
 //Pizza Check Statements -------------------------------------------------------------
 
-if (fiveDollarPizza === true) {
-  console.log('The Dominos Pizza Oracle TM will now predict a two topping medium pizza for you.');
-  generateFiveDollarPizza();
-} else {
-  console.log('The Dominos Pizza Oracle TM will now predict a pizza you will enjoy.');
-  toppingCheck();
-}
-
 function toppingCheck() {
   if (numToppings > 10) {
     console.log('The number of toppings you desire is clouding my vision.');
@@ -100,17 +98,17 @@ function randomElement(arr){
 }
 
 function generatePizzaBase(){
-  let bake = randomElement(pizzaBake);
-  let cut = randomElement(pizzaCut);
-  let sauce = randomElement(pizzaSauces);
-  let seasoningBool = randomElement(seasoning);
+  bake = randomElement(pizzaBake);
+  cut = randomElement(pizzaCut);
+  sauce = randomElement(pizzaSauces);
+  seasoning = Math.round(Math.random());
 }
 
-function generateFiveDollarPizza(numToppings) {
+function generateFiveDollarPizza() {
   generatePizzaBase();
-  let crust = randomElement(mediumCrusts);
-  let toppingA = randomElement(pizzaToppings);
-  let toppingB = randomElement(pizzaToppings);
+  crust = randomElement(mediumCrusts);
+  toppingA = randomElement(pizzaToppings);
+  toppingB = randomElement(pizzaToppings);
   while(toppingA == toppingB){
     toppingB = randomElement(pizzaToppings);
     //keeps randomizing until unique topping found
@@ -118,7 +116,8 @@ function generateFiveDollarPizza(numToppings) {
 
   console.log('The Dominos Pizza Oracle TM predicts you will enjoy a: ');
   console.log(`medium, ${bake} ${cut} ${crust} pizza`);
-  console.log(`with ${sauce}, ${toppingA}, ${toppingB}, and ${seasoningBool}.`);
+  console.log(`with ${sauce}, ${toppingA}, ${toppingB}, and ${seasoningOptions[seasoning]}.`);
+  prediction.innerText = "medium, "+bake+", "+cut+" "+crust+" pizza with "+sauce+", "+toppingA+", "+toppingB+", and "+seasoningOptions[seasoning];
 }
 
 function generatePizza(numToppings) {
@@ -147,7 +146,7 @@ function generatePizza(numToppings) {
     break;
   }
 
-  for(var i = 0; i <= numToppings; i++){
+  for(var i = 0; i < numToppings; i++){
     var t = randomElement(pizzaToppings);
     while(toppings.includes(t)){
       t = randomElement(pizzaToppings);
@@ -164,5 +163,14 @@ function generatePizza(numToppings) {
 
   console.log('The Dominos Pizza Oracle TM predicts you will enjoy a:');
   console.log(`${size}, ${bake} ${cut} ${crust} pizza`);
-  console.log(`with ${sauce},${toppings} and ${seasoningBool}.`);
+  console.log(`with ${sauce},${toppings} and ${seasoningOptions[seasoning]}.`);
+}
+
+// Main ----------------------------------------------------------
+if (fiveDollarPizza === true) {
+  console.log('The Dominos Pizza Oracle TM will now predict a two topping medium pizza for you.');
+  generateFiveDollarPizza();
+} else {
+  console.log('The Dominos Pizza Oracle TM will now predict a pizza you will enjoy.');
+  toppingCheck();
 }
